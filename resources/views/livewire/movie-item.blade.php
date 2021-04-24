@@ -1,3 +1,4 @@
+@php /** @var $movie \Tmdb\Model\Movie */ @endphp
 <div>
-    {{-- Stop trying to control. --}}
+    {{ $movie->getTitle() }}
 </div>
