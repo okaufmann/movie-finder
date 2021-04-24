@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Movies;
 use Livewire\Component;
 use Tmdb\Model\Search\SearchQuery\MovieSearchQuery;
 use Tmdb\Repository\SearchRepository;
@@ -27,11 +28,17 @@ class MovieFinder extends Component
     protected function findMovie()
     {
         $search = app(SearchRepository::class);
+        $movies = app(Movies::class);
         $query = new MovieSearchQuery();
         $query->page(1);
-
         $find = $search->searchMovie($this->searchTerm, $query);
+        $result = array_values($find->getAll());
 
-        return array_values($find->getAll());
+        $moviesWithData = [];
+        foreach ($result as $movie) {
+            $moviesWithData[] = $movies->load($movie);
+        }
+
+        return $moviesWithData;
     }
 }
