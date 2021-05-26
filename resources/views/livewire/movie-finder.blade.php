@@ -1,4 +1,7 @@
 <div class="flex flex-col space-y-10">
+    @if(session()->get('editModeEnabled') === true)
+        <div>Edit mode enabled</div>
+    @endif
     <div>
         <input type="search" class="rounded text-2xl w-full" wire:model.debounce.500ms="searchTerm">
     </div>
