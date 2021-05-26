@@ -91,7 +91,7 @@ class MovieItem extends Component
             ],
             'Added By' => [
                 'select' => [
-                    'name' => 'Oli',
+                    'name' => 'Movie-Finder',
                 ],
             ],
         ]);
