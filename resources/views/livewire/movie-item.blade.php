@@ -34,6 +34,11 @@
                class="text-blue-800">{{ $movie->getExternalIds()->getImdbId() }}</a>
 
             @if($editMode)
+                <div wire:loading>
+                    Adding...
+                </div>
+
+                <div wire:loading.remove>
                 @if($added)
                     <span class="text-blue-800">Added!</span>
                 @else
@@ -41,6 +46,7 @@
                             wire:click="addToList('{{ $movie->getId() }}')">Add to List
                     </button>
                 @endif
+                </div>
             @endif
         </div>
     </div>
