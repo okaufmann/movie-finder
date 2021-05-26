@@ -16,6 +16,11 @@ class MovieFinder extends Component
         'searchTerm' => ['except' => ''],
     ];
 
+    public function mount()
+    {
+        $this->setEditMode();
+    }
+
     public function render()
     {
         $movies = [];
@@ -40,12 +45,17 @@ class MovieFinder extends Component
             $moviesWithData[] = $movies->load($movie);
         }
 
-        ray($moviesWithData);
-
         $moviesWithData = collect($moviesWithData)->values()->sortByDesc([
             fn (Movie $a, Movie $b) => $b->getReleaseDate()?->getTimestamp() <=> $a->getReleaseDate()?->getTimestamp(),
         ]);
 
         return $moviesWithData;
+    }
+
+    protected function setEditMode()
+    {
+        if (request()->query('m') === md5('edit')) {
+            session()->put('editModeEnabled', true);
+        }
     }
 }

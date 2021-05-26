@@ -12,9 +12,14 @@ class Movies
     {
     }
 
+    public function loadById($movieId): Movie
+    {
+        return $this->movies->load($movieId, $this->getTmdbQueryParams());
+    }
+
     public function load(Movie $movie): Movie
     {
-        return $this->movies->load($movie->getId(), $this->getTmdbQueryParams());
+        return $this->loadById($movie->getId());
     }
 
     protected function getTmdbQueryParams($lang = null)
