@@ -1,18 +1,14 @@
 module.exports = {
-    purge: [
+    content: [
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
     ],
-    mode:'jit',
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [
-      require('@tailwindcss/forms')
-  ],
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+        extend: {},
+    },
+    plugins: [
+        require('@tailwindcss/forms')
+    ],
 }
