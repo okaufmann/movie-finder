@@ -7,15 +7,15 @@
             <input type="search" class="rounded text-2xl w-full" wire:model.debounce.500ms="searchTerm">
         </div>
         <div>
-            <label>
-                Show movies without IMDB Id
+            <label class="flex items-center space-x-2">
+                <span>Show movies without IMDB Id</span>
                 <input type="checkbox" class="rounded text-2xl" wire:model="showMoviesWithoutImdb">
             </label>
         </div>
     </div>
-    <div>
+    <div class="space-y-4">
         @forelse($movies as $movie)
-            <div class="odd:bg-gray-200 even:bg-gray-100" wire:loading.remove>
+            <div class="odd:bg-blue-100 even:bg-blue-50" wire:loading.remove>
                 <livewire:movie-item :movie="$movie" :key="$movie->getId()"/>
             </div>
         @empty

@@ -32,22 +32,36 @@
             </div>
         </div>
         <div class="flex justify-between w-full pt-4">
-            <a href="https://imdb.com/title/{{ $movie->getExternalIds()->getImdbId() }}"
-               class="text-blue-800">{{ $movie->getExternalIds()->getImdbId() }}</a>
-
+            <div class="flex space-x-4">
+                @if( $movie->getImdbId())
+                    <a href="https://imdb.com/title/{{ $movie->getExternalIds()->getImdbId() }}"
+                       class="text-blue-800 flex items-center"
+                       target="_blank">{{ $movie->getExternalIds()->getImdbId() }}
+                        <x-icons.external-link class="h-6 w-6"/>
+                    </a>
+                    @if($editMode)
+                        <a href="https://anonym.es/?https://hd-source.to/?s={{ $movie->getExternalIds()->getImdbId() }}"
+                           class="text-blue-800 flex items-center" target="_blank">Search hd-source.to
+                            <x-icons.external-link class="h-6 w-6"/>
+                        </a>
+                    @endif
+                @endif
+            </div>
             @if($editMode)
                 <div wire:loading>
                     Adding...
                 </div>
 
                 <div wire:loading.remove>
-                @if($added)
-                    <span class="text-blue-800">Added!</span>
-                @else
-                    <button class="px-2 py-1 text-white bg-blue-800 rounded"
-                            wire:click="addToList('{{ $movie->getId() }}')">Add to Notion
-                    </button>
-                @endif
+                    @if($added)
+                        <span class="text-blue-800">Added!</span>
+                    @else
+                        <button class="px-4 py-3 text-white bg-blue-800 rounded flex items-center space-x-1"
+                                wire:click="addToList('{{ $movie->getId() }}')">
+                            <span>Add to Notion</span>
+                            <x-icons.plus class="h-6 w-6"/>
+                        </button>
+                    @endif
                 </div>
             @endif
         </div>

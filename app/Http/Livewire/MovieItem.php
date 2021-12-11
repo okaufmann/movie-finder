@@ -61,7 +61,7 @@ class MovieItem extends Component
     {
         $notion = app(Notion::class);
 
-        $notion->addEntryToDatabase([
+        $databaseEntry = [
             'Name' => [
                 'title' => [
                     [
@@ -94,7 +94,12 @@ class MovieItem extends Component
                     'name' => 'Movie-Finder',
                 ],
             ],
-        ]);
+            'Links' => [
+                'url' => $movie->getExternalIds()->getImdbId() ? "https://hd-source.to/?s={$movie->getExternalIds()->getImdbId()}" : '',
+            ],
+        ];
+
+        $notion->addEntryToDatabase($databaseEntry);
     }
 
     protected function isInEditMode()
