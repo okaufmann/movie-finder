@@ -9,8 +9,10 @@
     <div class="flex flex-col justify-between w-full p-4">
         <div class="flex flex-col space-y-1 ">
             <div class="text-xl font-semibold">
-                <a href="https://themoviedb.org/movie/{{ $movie->getId() }}">{{ $movie->getTitle() }} </a>({{ \Carbon\Carbon::make($movie->getReleaseDate())->toDateString() }}
-                )
+                <a href="https://themoviedb.org/movie/{{ $movie->getId() }}">{{ $movie->getTitle() }} </a>
+                @if($movie->getReleaseDate())
+                    ({{ \Carbon\Carbon::make($movie->getReleaseDate())?->toDateString() }})
+                @endif
             </div>
             <div>
                 <p>
@@ -43,7 +45,7 @@
                     <span class="text-blue-800">Added!</span>
                 @else
                     <button class="px-2 py-1 text-white bg-blue-800 rounded"
-                            wire:click="addToList('{{ $movie->getId() }}')">Add to List
+                            wire:click="addToList('{{ $movie->getId() }}')">Add to Notion
                     </button>
                 @endif
                 </div>

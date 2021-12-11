@@ -12,8 +12,11 @@ class MovieFinder extends Component
 {
     public $searchTerm;
 
+    public $showMoviesWithoutImdb = false;
+
     protected $queryString = [
         'searchTerm' => ['except' => ''],
+        'showMoviesWithoutImdb',
     ];
 
     public function mount()
@@ -31,7 +34,10 @@ class MovieFinder extends Component
         return view('livewire.movie-finder')->with('movies', $movies);
     }
 
-    protected function findMovie()
+    /**
+     * @return Movie[]
+     */
+    protected function findMovie(): array
     {
         $search = app(SearchRepository::class);
         $movies = app(Movies::class);
@@ -40,16 +46,33 @@ class MovieFinder extends Component
         $find = $search->searchMovie($this->searchTerm, $query);
         $result = array_values($find->getAll());
 
-        $moviesWithData = [];
+        $moviesWithData = collect();
         foreach ($result as $movie) {
             $moviesWithData[] = $movies->load($movie);
         }
 
-        $moviesWithData = collect($moviesWithData)->values()->sortByDesc([
-            fn (Movie $a, Movie $b) => $b->getReleaseDate()?->getTimestamp() <=> $a->getReleaseDate()?->getTimestamp(),
+        if (! $this->showMoviesWithoutImdb) {
+            $moviesWithData = $moviesWithData->filter(function (Movie $movie) {
+                return $movie->getImdbId();
+            });
+        }
+
+        $moviesWithData = $moviesWithData->values()->sortByDesc([
+            function (Movie $a, Movie $b) {
+                if (is_string($b->getReleaseDate()) && empty(trim($b->getReleaseDate()))) {
+                    return 0;
+                }
+
+                if (is_string($a->getReleaseDate()) && empty(trim($a->getReleaseDate()))) {
+                    return 0;
+                }
+
+                // https://www.php.net/manual/en/language.operators.comparison.php
+                return $b->getReleaseDate()?->getTimestamp() <=> $a->getReleaseDate()?->getTimestamp();
+            },
         ]);
 
-        return $moviesWithData;
+        return $moviesWithData->toArray();
     }
 
     protected function setEditMode()
