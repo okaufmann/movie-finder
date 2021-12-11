@@ -30,7 +30,7 @@ class Client
         ])->throw();
     }
 
-    public function queryDatabase(array $query):array
+    public function queryDatabase(array $query): array
     {
         $url = "{$this->baseUrl}/databases/{$this->databaseId}/query";
 
