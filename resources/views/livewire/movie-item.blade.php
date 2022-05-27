@@ -27,7 +27,7 @@
                 @foreach($castList as $cast)
                     <a class="text-blue-800"
                        href="https://www.themoviedb.org/person/{{$cast->getId() }}">{{$cast->getName()}}
-                        ({{ $cast->getCharacter() }})</a>
+                        ({{ $cast->getCharacter() }})</a>@if(!$loop->last), @endif
                 @endforeach
             </div>
         </div>
