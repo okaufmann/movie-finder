@@ -84,7 +84,7 @@ class MovieItem extends Component
                 'rich_text' => [
                     [
                         'text' => [
-                            'content' => \Carbon\Carbon::make($movie->getReleaseDate())?->toDateString() ?? 'announced',
+                            'content' => \Illuminate\Support\Carbon::make($movie->getReleaseDate())?->toDateString() ?? 'announced',
                         ],
                     ],
                 ],

@@ -16,7 +16,7 @@
             <div class="text-xl font-semibold">
                 <a href="https://themoviedb.org/movie/{{ $movie->getId() }}">{{ $movie->getTitle() }} </a>
                 @if($movie->getReleaseDate())
-                    ({{ \Carbon\Carbon::make($movie->getReleaseDate())?->toDateString() }})
+                    ({{ \Illuminate\Support\Carbon::make($movie->getReleaseDate())?->toDateString() }})
                 @endif
             </div>
             <div>
