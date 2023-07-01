@@ -1,9 +1,8 @@
 @php /** @var $movie \Tmdb\Model\Movie */ @endphp
 @inject('imageHelper', \Tmdb\Helper\ImageHelper::class)
 <div class="flex flex-col sm:flex-row" x-data="{
-    copy(text) {
-        console.log(text)
-        navigator.clipboard.writeText(text)
+    async copy(text) {
+        await navigator.clipboard.writeText(text)
     }
 }">
     <div class=" sm:min-w-[150px] flex justify-center">
