@@ -1,6 +1,11 @@
 @php /** @var $movie \Tmdb\Model\Movie */ @endphp
 @inject('imageHelper', \Tmdb\Helper\ImageHelper::class)
-<div class="flex flex-col sm:flex-row">
+<div class="flex flex-col sm:flex-row" x-data="{
+    copy(text) {
+        console.log(text)
+        navigator.clipboard.writeText(text)
+    }
+}">
     <div class=" sm:min-w-[150px] flex justify-center">
         @if($movie->getPosterImage())
             {!!  $imageHelper->getHtml($movie->getPosterImage(), 'w185', 150, 75) !!}
@@ -39,12 +44,10 @@
                        target="_blank">{{ $movie->getExternalIds()->getImdbId() }}
                         <x-icons.external-link class="h-6 w-6"/>
                     </a>
-                    @if($editMode)
-                        <a href="https://anonym.es/?https://hd-source.to/?s={{ $movie->getExternalIds()->getImdbId() }}"
-                           class="text-blue-800 flex items-center" target="_blank">Search hd-source.to
-                            <x-icons.external-link class="h-6 w-6"/>
-                        </a>
-                    @endif
+                    <button type="button" @click="copy('{{ $movie->getExternalIds()->getImdbId() }}')"  class="text-blue-800 flex items-center">
+                        <x-icons.copy class="h-6 w-6"/>
+                        Copy
+                    </button>
                 @endif
             </div>
             @if($editMode)
